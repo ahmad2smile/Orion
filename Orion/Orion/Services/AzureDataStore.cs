@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Xamarin.Essentials;
 using Orion.Models;
 
 namespace Orion.Services
@@ -17,12 +16,12 @@ namespace Orion.Services
         public AzureDataStore()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
+            client.BaseAddress = new Uri("");
 
             items = new List<Item>();
         }
 
-        bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
+        bool IsConnected => true;
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
             if (forceRefresh && IsConnected)
