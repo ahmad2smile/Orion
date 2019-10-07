@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Orion.Models;
+using Orion.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
 using Xamarin.Forms;
-
-using Orion.Models;
-using Orion.Services;
 
 namespace Orion.ViewModels
 {
@@ -14,14 +12,14 @@ namespace Orion.ViewModels
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
-        bool isBusy = false;
+        private bool isBusy = false;
         public bool IsBusy
         {
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
         }
 
-        string title = string.Empty;
+        private string title = string.Empty;
         public string Title
         {
             get { return title; }

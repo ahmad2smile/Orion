@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />  
+    <PackageReference Include="Makaretu.Dns.Multicast" Version="0.25.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.2.0.848062" />  
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Orion.Models;
+using Orion.ViewModels;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using Orion.Models;
-using Orion.ViewModels;
 
 namespace Orion.Views
 {
@@ -13,7 +10,7 @@ namespace Orion.Views
     [DesignTimeVisible(false)]
     public partial class ItemDetailPage : ContentPage
     {
-        ItemDetailViewModel viewModel;
+        private ItemDetailViewModel viewModel;
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {

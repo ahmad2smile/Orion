@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Orion.Models;
+using Orion.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
-
-using Orion.Models;
-using Orion.Views;
 
 namespace Orion.ViewModels
 {
@@ -23,13 +21,13 @@ namespace Orion.ViewModels
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
-                var newItem = item as Item;
+                var newItem = item;
                 Items.Add(newItem);
                 await DataStore.AddItemAsync(newItem);
             });
         }
 
-        async Task ExecuteLoadItemsCommand()
+        public async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
                 return;
@@ -40,6 +38,7 @@ namespace Orion.ViewModels
             {
                 Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
+
                 foreach (var item in items)
                 {
                     Items.Add(item);

@@ -1,9 +1,7 @@
 ﻿using Orion.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Orion.Views
 {
@@ -12,8 +10,8 @@ namespace Orion.Views
     [DesignTimeVisible(false)]
     public partial class MenuPage : ContentPage
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
-        List<HomeMenuItem> menuItems;
+        private MainPage RootPage { get => Application.Current.MainPage as MainPage; }
+        private List<HomeMenuItem> menuItems;
         public MenuPage()
         {
             InitializeComponent();

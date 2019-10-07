@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Orion.Models;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Orion.Models;
 
 namespace Orion.Services
 {
     public class AzureDataStore : IDataStore<Item>
     {
-        HttpClient client;
-        IEnumerable<Item> items;
+        private HttpClient client;
+        private IEnumerable<Item> items;
 
         public AzureDataStore()
         {
@@ -21,7 +21,7 @@ namespace Orion.Services
             items = new List<Item>();
         }
 
-        bool IsConnected => true;
+        private bool IsConnected => true;
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
             if (forceRefresh && IsConnected)

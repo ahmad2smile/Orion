@@ -1,36 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using Orion.Models;
-using Orion.Views;
+﻿using Orion.Models;
+using Orion.Services;
 using Orion.ViewModels;
+using System;
+using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace Orion.Views
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class ItemsPage : ContentPage
+    public partial class ItemsPage
     {
-        ItemsViewModel viewModel;
+        private readonly ItemsViewModel _viewModel;
 
         public ItemsPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ItemsViewModel();
+            BindingContext = _viewModel = new ItemsViewModel();
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Item;
-            if (item == null)
+            if (!(args.SelectedItem is Item item))
                 return;
 
             await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
@@ -39,7 +30,7 @@ namespace Orion.Views
             ItemsListView.SelectedItem = null;
         }
 
-        async void AddItem_Clicked(object sender, EventArgs e)
+        private async void AddItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
         }
@@ -48,8 +39,21 @@ namespace Orion.Views
         {
             base.OnAppearing();
 
-            if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            if (_viewModel.Items.Count == 0)
+            {
+                _viewModel.LoadItemsCommand.Execute(null);
+            }
+
+            var networkService = new NetworkService();
+            networkService.foundNodeEvent += OnFoundNewNode;
+        }
+
+        private void OnFoundNewNode(Item newItem)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _viewModel.Items.Add(newItem);
+            });
         }
     }
 }
