@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.iOS", "Orion\Orion.iO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion\Orion.csproj", "{7467EE1C-34B7-4D2D-B727-339A6F33A15C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Domain", "Orion.Domain\Orion.Domain.csproj", "{8A2BB72B-99D5-4314-8179-F584B8B0D985}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Domain", "Orion\Orion.Domain\Orion.Domain.csproj", "{8A2BB72B-99D5-4314-8179-F584B8B0D985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Mac", "Orion.Mac\Orion.Mac.csproj", "{AC43B682-F41D-4326-B2E7-9A2FF1A548C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Mac", "Orion\Orion.Mac\Orion.Mac.csproj", "{AC43B682-F41D-4326-B2E7-9A2FF1A548C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
