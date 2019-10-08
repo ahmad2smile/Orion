@@ -1,13 +1,13 @@
-﻿using Orion.Services;
+﻿using Orion.Domain;
+using Orion.Services;
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
 namespace Orion.ViewModels
 {
     public class SetupViewModel : BaseViewModel
     {
-        private string _nodeIp = "No IP";
-
-        public string NodeIp { get => _nodeIp; set => SetProperty(ref _nodeIp, value, nameof(NodeIp)); }
+        public ObservableCollection<Node> Nodes { get; set; } = new ObservableCollection<Node>();
 
 
         public SetupViewModel(INetworkService networkService)
@@ -15,11 +15,11 @@ namespace Orion.ViewModels
             networkService.FoundNodeEvent += OnFoundNode;
         }
 
-        private void OnFoundNode(Models.Item newItem)
+        private void OnFoundNode(Node node)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                NodeIp = newItem.Id;
+                Nodes.Add(node);
             });
         }
     }

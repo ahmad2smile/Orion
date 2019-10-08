@@ -1,5 +1,5 @@
 ﻿using Makaretu.Dns;
-using Orion.Models;
+using Orion.Domain;
 using System;
 using System.Linq;
 
@@ -9,7 +9,7 @@ namespace Orion.Services
     {
         private MulticastService MulticastService { get; set; } = new MulticastService();
 
-        public delegate void FoundNode(Item newItem);
+        public delegate void FoundNode(Node node);
 
         public event FoundNode FoundNodeEvent;
 
@@ -37,14 +37,14 @@ namespace Orion.Services
                 var ip = serviceName.RemoteEndPoint.Address.ToString();
 
                 var domain = string.Join(".", question.Name.Labels.ToArray());
-                var newItem = new Item
+                var node = new Node
                 {
-                    Id = ip,
-                    Text = ip,
-                    Description = domain
+                    Id = new Guid(),
+                    Ip = ip,
+                    Name = domain
                 };
 
-                FoundNodeEvent?.Invoke(newItem);
+                FoundNodeEvent?.Invoke(node);
             };
 
         }

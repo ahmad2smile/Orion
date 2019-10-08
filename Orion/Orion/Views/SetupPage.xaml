@@ -7,9 +7,23 @@
              x:Class="Orion.Views.SetupPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding NodeIp}"
+            <Label Text="Nodes Found:"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <ListView
+                x:Name="nodesList"
+                ItemsSource="{Binding Nodes}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" FontSize="Large"></Label>
+                                <Label Text="{Binding Ip}" HorizontalOptions="StartAndExpand"></Label>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
