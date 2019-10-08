@@ -27,7 +27,7 @@ namespace Orion.ViewModels
             });
         }
 
-        public async Task ExecuteLoadItemsCommand()
+        private async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
                 return;

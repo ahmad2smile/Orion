@@ -1,5 +1,4 @@
 ﻿using Orion.Models;
-using Orion.Services;
 using Orion.ViewModels;
 using System;
 using System.ComponentModel;
@@ -44,16 +43,7 @@ namespace Orion.Views
                 _viewModel.LoadItemsCommand.Execute(null);
             }
 
-            var networkService = new NetworkService();
-            networkService.foundNodeEvent += OnFoundNewNode;
-        }
 
-        private void OnFoundNewNode(Item newItem)
-        {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                _viewModel.Items.Add(newItem);
-            });
         }
     }
 }

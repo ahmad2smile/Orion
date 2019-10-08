@@ -1,27 +1,45 @@
-﻿using Xamarin.Forms;
+﻿using Autofac;
 using Orion.Services;
 using Orion.Views;
+using Xamarin.Forms;
 
 namespace Orion
 {
-    public partial class App : Application
+    public partial class App
     {
-        public static bool UseMockDataStore = true;
+        private readonly INetworkService _networkService;
+        private bool IsAlreadySetup { get; set; }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
+        private static IContainer Container { get; set; }
 
         public App()
         {
+            _networkService = new NetworkService();
             InitializeComponent();
 
-            if (UseMockDataStore)
-                DependencyService.Register<MockDataStore>();
-            else
-                DependencyService.Register<AzureDataStore>();
+            DependencyService.Register<MockDataStore>();
+
             MainPage = new MainPage();
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            var builder = new ContainerBuilder();
+
+            builder.RegisterInstance(_networkService).As<INetworkService>().SingleInstance();
+
+            _networkService.FoundNodeEvent += newItem =>
+            {
+                IsAlreadySetup = false;
+            };
+            _networkService.StartNetwork();
+
+            if (!IsAlreadySetup)
+            {
+                MainPage = new SetupPage(_networkService);
+            }
+
+            Container = builder.Build();
         }
 
         protected override void OnSleep()

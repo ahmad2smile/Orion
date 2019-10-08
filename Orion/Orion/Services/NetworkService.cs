@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace Orion.Services
 {
-    public class NetworkService
+    public class NetworkService : INetworkService
     {
         private MulticastService MulticastService { get; set; } = new MulticastService();
 
         public delegate void FoundNode(Item newItem);
 
-        public event FoundNode foundNodeEvent;
+        public event FoundNode FoundNodeEvent;
 
         public NetworkService()
         {
@@ -30,7 +30,7 @@ namespace Orion.Services
                 serviceDiscovery.QueryAllServices();
             };
 
-            MulticastService.QueryReceived += async (sender, serviceName) =>
+            MulticastService.QueryReceived += (sender, serviceName) =>
             {
                 Console.WriteLine($"service '{serviceName}'");
                 var question = serviceName.Message.Questions.First();
@@ -44,9 +44,13 @@ namespace Orion.Services
                     Description = domain
                 };
 
-                foundNodeEvent?.Invoke(newItem);
+                FoundNodeEvent?.Invoke(newItem);
             };
 
+        }
+
+        public void StartNetwork()
+        {
             MulticastService.Start();
         }
     }
