@@ -9,11 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Android", "Orion\Orio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.iOS", "Orion\Orion.iOS\Orion.iOS.csproj", "{B2E5BE36-7A89-4257-84D5-B7B4FDF38A7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion\Orion.csproj", "{7467EE1C-34B7-4D2D-B727-339A6F33A15C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion", "Orion\Orion\Orion.csproj", "{7467EE1C-34B7-4D2D-B727-339A6F33A15C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Domain", "Orion\Orion.Domain\Orion.Domain.csproj", "{8A2BB72B-99D5-4314-8179-F584B8B0D985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Domain", "Orion\Orion.Domain\Orion.Domain.csproj", "{8A2BB72B-99D5-4314-8179-F584B8B0D985}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Mac", "Orion\Orion.Mac\Orion.Mac.csproj", "{AC43B682-F41D-4326-B2E7-9A2FF1A548C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Console", "Orion\Orion.Console\Orion.Console.csproj", "{5CC9136A-91AA-43E0-967A-CC27D1A96D71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -223,6 +225,30 @@ Global
 		{AC43B682-F41D-4326-B2E7-9A2FF1A548C3}.Release|x64.Build.0 = Release|Any CPU
 		{AC43B682-F41D-4326-B2E7-9A2FF1A548C3}.Release|x86.ActiveCfg = Release|Any CPU
 		{AC43B682-F41D-4326-B2E7-9A2FF1A548C3}.Release|x86.Build.0 = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|x64.Build.0 = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Debug|x86.Build.0 = Debug|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|ARM.Build.0 = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|iPhone.Build.0 = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|x64.ActiveCfg = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|x64.Build.0 = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|x86.ActiveCfg = Release|Any CPU
+		{5CC9136A-91AA-43E0-967A-CC27D1A96D71}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
