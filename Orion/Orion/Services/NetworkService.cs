@@ -7,36 +7,32 @@ namespace Orion.Services
 {
     public class NetworkService : INetworkService
     {
+        private const string OrionDomain = "orion.p2p.app.local";
+
         private MulticastService MulticastService { get; set; } = new MulticastService();
 
         public delegate void FoundNode(Node node);
 
         public event FoundNode FoundNodeEvent;
 
-        public NetworkService()
+        public void StartNetwork()
         {
+            RegisterQueryListener();
 
-            var service = new ServiceProfile("x", "example.local", 1024);
-            var serviceDiscovery = new ServiceDiscovery(MulticastService);
-            serviceDiscovery.Advertise(service);
+            MulticastService.Start();
+        }
 
-            MulticastService.NetworkInterfaceDiscovered += (sender, args) =>
+        private void RegisterQueryListener()
+        {
+            MulticastService.QueryReceived += (sender, eventArgs) =>
             {
-                foreach (var nic in args.NetworkInterfaces)
-                {
-                    Console.WriteLine($"NIC '{nic.Name}'");
-                }
-
-                serviceDiscovery.QueryAllServices();
-            };
-
-            MulticastService.QueryReceived += (sender, serviceName) =>
-            {
-                Console.WriteLine($"service '{serviceName}'");
-                var question = serviceName.Message.Questions.First();
-                var ip = serviceName.RemoteEndPoint.Address.ToString();
-
+                var question = eventArgs.Message.Questions.First();
                 var domain = string.Join(".", question.Name.Labels.ToArray());
+
+                if (domain != OrionDomain) return;
+
+                var ip = eventArgs.RemoteEndPoint.Address.ToString();
+
                 var node = new Node
                 {
                     Id = new Guid(),
@@ -46,12 +42,6 @@ namespace Orion.Services
 
                 FoundNodeEvent?.Invoke(node);
             };
-
-        }
-
-        public void StartNetwork()
-        {
-            MulticastService.Start();
         }
     }
 }
