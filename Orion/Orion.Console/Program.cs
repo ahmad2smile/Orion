@@ -1,10 +1,20 @@
-﻿namespace Orion.Console
+﻿using System;
+using Orion.Domain;
+using Orion.Services;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        var networkService = new NetworkService();
+        networkService.StartNetwork();
+
+        networkService.FoundNodeEvent += (Node node) =>
         {
-            System.Console.WriteLine("Hello World!");
-        }
+            Console.WriteLine($"Name: {node.Name}       IP: {node.Ip}");
+            
+        };
+
+        Console.ReadKey();
     }
 }
