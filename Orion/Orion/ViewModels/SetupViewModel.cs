@@ -7,11 +7,19 @@ namespace Orion.ViewModels
 {
     public class SetupViewModel : BaseViewModel
     {
-        public ObservableCollection<Node> Nodes { get; set; } = new ObservableCollection<Node>();
+        public User User
+        {
+            get => _user;
+            set { _user = value; OnPropertyChanged(); }
+        }
+        private User _user;
 
+        private ObservableCollection<Node> Nodes { get; } = new ObservableCollection<Node>();
 
         public SetupViewModel(INetworkService networkService)
         {
+            User = new User();
+
             networkService.FoundNodeEvent += OnFoundNode;
         }
 

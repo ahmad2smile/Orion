@@ -1,4 +1,5 @@
-﻿using Orion.Models;
+﻿using Orion.Domain;
+using Orion.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Orion.Services
 {
-    public class MockDataStore : IDataStore<Item>
+    public class DataStore : IDataStore<Item>
     {
         private readonly List<Item> _items;
+        private User _user = new User();
 
-        public MockDataStore()
+        public DataStore()
         {
             _items = new List<Item>()
             {
@@ -28,6 +30,18 @@ namespace Orion.Services
             _items.Add(item);
 
             return await Task.FromResult(true);
+        }
+
+        public async Task<bool> SetUser(User user)
+        {
+            _user = user;
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<User> GetUser()
+        {
+            return await Task.FromResult(_user);
         }
 
         public async Task<bool> UpdateItemAsync(Item item)

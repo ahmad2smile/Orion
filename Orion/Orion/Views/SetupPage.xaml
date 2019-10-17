@@ -7,6 +7,8 @@
              x:Class="Orion.Views.SetupPage">
     <ContentPage.Content>
         <StackLayout>
+            <Entry Text="{Binding User.Name}" Placeholder="Name"/>
+            <Button HorizontalOptions="Center" Text="Save" Clicked="SetupUserClicked"/>
             <Label Text="Nodes Found:"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />

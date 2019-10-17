@@ -1,14 +1,17 @@
 ﻿using Autofac;
+using Orion.Models;
 using Orion.Services;
 using Orion.Views;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Orion
 {
     public partial class App
     {
+        private static IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+
         private readonly INetworkService _networkService;
-        private bool IsAlreadySetup { get; set; }
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
         private static IContainer Container { get; set; }
 
@@ -17,9 +20,9 @@ namespace Orion
             _networkService = new NetworkService();
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<DataStore>();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new SetupPage(_networkService));
         }
 
         protected override void OnStart()
@@ -28,16 +31,19 @@ namespace Orion
 
             builder.RegisterInstance(_networkService).As<INetworkService>().SingleInstance();
 
-            _networkService.FoundNodeEvent += newItem =>
-            {
-                IsAlreadySetup = false;
-            };
             _networkService.StartNetwork();
 
-            if (!IsAlreadySetup)
+            Task.Run(async () =>
             {
-                MainPage = new SetupPage(_networkService);
-            }
+                var user = await DataStore.GetUser();
+
+                if (user.Name != null)
+                {
+                    MainPage = new NavigationPage(new MainPage());
+                }
+            });
+
+
 
             Container = builder.Build();
         }
