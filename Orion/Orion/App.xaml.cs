@@ -22,7 +22,10 @@ namespace Orion
 
             DependencyService.Register<DataStore>();
 
-            MainPage = new NavigationPage(new SetupPage(_networkService));
+            var navPage = new NavigationPage(new SetupPage(_networkService));
+            navPage.BarBackgroundColor = Color.Transparent;
+
+            MainPage = navPage;
         }
 
         protected override void OnStart()
@@ -32,6 +35,7 @@ namespace Orion
             builder.RegisterInstance(_networkService).As<INetworkService>().SingleInstance();
 
             _networkService.StartNetwork();
+            _networkService.BroadcastSelfNode();
 
             Task.Run(async () =>
             {

@@ -1,5 +1,5 @@
 ﻿using Makaretu.Dns;
-using Orion.Domain;
+using Makaretu.Dns.Resolving;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +7,15 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Timers;
+using Node = Orion.Domain.Node;
 
 namespace Orion.Services
 {
     public class NetworkService : INetworkService
     {
         private const string OrionDomain = "orion.p2p.app.local";
+        private const int BroadcastingInterval = 2 * 1000;
 
         private const int MulticastPort = 5353;
         private static readonly IPAddress MulticastAddressIp4 = IPAddress.Parse("224.0.0.251");
@@ -23,28 +26,10 @@ namespace Orion.Services
 
         public event EventHandler<UdpReceiveResult> MessageReceived;
 
-        private static IEnumerable<NetworkInterface> GetNetworkInterfaces()
+        private static readonly NameServer NameServer = new NameServer
         {
-            var allUpNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(n => n.OperationalStatus == OperationalStatus.Up)
-                .ToArray();
-
-            var nonLoopBackInterfaces = allUpNetworkInterfaces
-            .Where(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                .ToArray();
-
-            return nonLoopBackInterfaces.Length > 0 ? nonLoopBackInterfaces : allUpNetworkInterfaces;
-        }
-
-        private IEnumerable<IPAddress> GetNetworkInterfaceLocalAddresses()
-        {
-            return GetNetworkInterfaces().SelectMany(nic => nic
-                    .GetIPProperties()
-                    .UnicastAddresses
-                    .Select(x => x.Address)
-                    .Where(x => x.AddressFamily != AddressFamily.InterNetworkV6 || x.IsIPv6LinkLocal))
-                .Where(a => a.AddressFamily == AddressFamily.InterNetwork);
-        }
+            Catalog = new Catalog()
+        };
 
         public void StartNetwork()
         {
@@ -67,6 +52,45 @@ namespace Orion.Services
             }
 
             ListenForDnsMessages(receiver);
+        }
+
+        public void BroadcastSelfNode()
+        {
+            var timer = new Timer { Interval = BroadcastingInterval };
+
+            timer.Elapsed += async (sender, args) =>
+            {
+                var request = new Message();
+                request.Questions.Add(new Question { Name = OrionDomain, Type = DnsType.AAAA });
+                // In trying to resolve DNS record listening Node get the IP of Self Node
+                var response = await NameServer.ResolveAsync(request);
+            };
+
+            timer.Start();
+        }
+
+
+        private static IEnumerable<NetworkInterface> GetNetworkInterfaces()
+        {
+            var allUpNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(n => n.OperationalStatus == OperationalStatus.Up)
+                .ToArray();
+
+            var nonLoopBackInterfaces = allUpNetworkInterfaces
+                .Where(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .ToArray();
+
+            return nonLoopBackInterfaces.Length > 0 ? nonLoopBackInterfaces : allUpNetworkInterfaces;
+        }
+
+        private IEnumerable<IPAddress> GetNetworkInterfaceLocalAddresses()
+        {
+            return GetNetworkInterfaces().SelectMany(nic => nic
+                    .GetIPProperties()
+                    .UnicastAddresses
+                    .Select(x => x.Address)
+                    .Where(x => x.AddressFamily != AddressFamily.InterNetworkV6 || x.IsIPv6LinkLocal))
+                .Where(a => a.AddressFamily == AddressFamily.InterNetwork);
         }
 
         private void ListenForDnsMessages(UdpClient receiver)

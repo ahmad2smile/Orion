@@ -14,7 +14,7 @@ namespace Orion.ViewModels
         }
         private User _user;
 
-        private ObservableCollection<Node> Nodes { get; } = new ObservableCollection<Node>();
+        public ObservableCollection<Node> Nodes { get; } = new ObservableCollection<Node>();
 
         public SetupViewModel(INetworkService networkService)
         {

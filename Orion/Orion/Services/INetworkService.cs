@@ -4,5 +4,6 @@
     {
         event NetworkService.FoundNode FoundNodeEvent;
         void StartNetwork();
+        void BroadcastSelfNode();
     }
 }
