@@ -60,10 +60,14 @@ namespace Orion.Services
 
             timer.Elapsed += async (sender, args) =>
             {
-                var request = new Message();
-                request.Questions.Add(new Question { Name = OrionDomain, Type = DnsType.AAAA });
-                // In trying to resolve DNS record listening Node get the IP of Self Node
-                var response = await NameServer.ResolveAsync(request);
+                try
+                {
+                    var ipAddress = await Dns.GetHostAddressesAsync(OrionDomain);
+                }
+                catch (Exception _)
+                {
+
+                }
             };
 
             timer.Start();
